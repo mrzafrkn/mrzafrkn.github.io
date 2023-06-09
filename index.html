@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" type="image/x-icon" href="./images/arem_logo.png">
+ 
+    <title>Müşteri Kayıt</title>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <!-- <div id="main_logo">
+            <img src="./images/main_logo.png">
+        </div> -->
+        <h1>Müşteri Kayıt</h1>
+        <p>Arem Yazılımevi &copy; 2023</p>
+    </header>
+
+    <main>
+        <form action="/kaydet" method="post" id="myForm">
+            <label for="sirketAdi">Şirket Adı:</label>
+            <input type="text" id="sirketAdi" class="musteriKayit" name="sirketAdi" required>
+
+            <label for="musteriTipi">Müşteri Tipi:</label>
+            <select name="musteriTipi" id="musteriTipi" class="musteriKayit" required>
+                <option value="Bayi">Bayi</option>
+                <option value="Bayi Adayı">Bayi Adayı</option>
+                <option value="Müşteri">Müşteri</option>
+            </select>
+
+            <label for="sorumluPersonel">Sorumlu Personel:</label>
+            <select name="sorumluPersonel" id="sorumluPersonel" required>
+                <option value="Furkan Kalkan">Furkan Kalkan</option>
+            </select>
+
+            <label for="webSitesi">Web Sitesi:</label>
+            <input type="text" id="webSitesi" class="musteriKayit" name="webSitesi" required>
+
+            <label for="ePosta">E-posta:</label>
+            <input type="email" id="ePosta" class="musteriKayit" name="ePosta" required>
+
+            <label for="telefon">Telefon:</label>
+            <input type="text" id="telefon" class="musteriKayit" name="telefon" required>
+
+            <label for="adres">Adres:</label>
+            <input style="height: 200px;" type="text" id="adres" class="musteriKayit" name="adres" required>
+
+            <input class="btn" type="submit" value="Kaydet">
+            <input class="btn" type="button" value="Temizle">
+        </form>
+    </main>
+    <button class="btn" onclick="exportToXLSX()">Excel'i İndir</button>
+    <section id="list">
+
+        <table id="myTable">
+            <tr>
+                <th>SirketAdi</th>
+                <th>MusteriTipi</th>
+                <th>SorumluPersonel</th>
+                <th>WebSitesi</th>
+                <th>Eposta</th>
+                <th>Telefon</th>
+                <th>Adres</th>
+            </tr>
+            <tr>
+                <td>Arem</td>
+                <td>Bayi</td>
+                <td>Furkan Kalkan</td>
+                <td>www.furkan.com</td>
+                <td>furkan@mail.com</td>
+                <td>055555555</td>
+                <td>Kartal/İstanbul</td>
+            </tr>
+        </table>
+    </section>
+
+    <footer>
+        <div id="footer_logo">
+            <img src="./images/footer_logo.png" alt="">
+        </div>
+        <div id="footer_phones">
+            <i class="fa-solid fa-phone"></i>
+            <b>Tel:</b><span>+90 (216) 469 53 67</span><br>
+            <b>Fax:</b><span>+90 (216) 469 53 68</span><br>
+            <b>Cep:</b><span>+90 (532) 705 11 26 / +90 (532) 705 11 28 </span><br>
+            <b>info@aremyazilimevi.com.tr</b>
+        </div>
+        <div id="footer_map">
+            <i class="fa-solid fa-location-dot"></i>
+            <span>
+                <b>Adresimiz</b><br>
+                İçerenköy Mah. Üsküdar-İçerenköy Yolu Cad. <br>
+                No:8 Bodur İş Merkezi Kat:7 D:29 Ataşehir İSTANBUL
+            </span>
+
+
+        </div>
+        <div id="footer_nav">
+            <a href="http://www.aremyazilimevi.com.tr/" target="_blank">Web Sitemiz</a>
+            <a href="#iletisim">İletişim</a>
+            <a href="#hakkimizda">Hakkımızda</a>
+        </div>
+
+    </footer>
+
+    <script src="app.js"></script>
+    <script src="export.js"></script>
+</body>
+
+</html>
