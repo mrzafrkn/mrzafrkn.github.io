@@ -1,9 +1,3 @@
-// let sirketAdi = prompt("Şirketinizin adını girniz.");
-// document.getElementById("sirketAdi").value = sirketAdi; 
-
-// let webSitesi = prompt("Şirket web sitesini giriniz");
-// document.getElementById("webSitesi").value = webSitesi;
-
 const form = document.getElementById('myForm');
 const table = document.getElementById('myTable');
 
@@ -11,6 +5,7 @@ const table = document.getElementById('myTable');
 window.addEventListener('DOMContentLoaded', function() {
   if (localStorage.getItem('tableData')) {
     table.innerHTML = localStorage.getItem('tableData');
+    attachDeleteButtonListeners();
   }
 });
 
@@ -26,6 +21,12 @@ form.addEventListener('submit', function(e) {
   const ePosta = document.getElementById('ePosta').value;
   const telefon = document.getElementById('telefon').value;
   const adres = document.getElementById('adres').value;
+
+  // E-posta daha önce girilmiş mi diye kontrol edin
+  if (checkDuplicateEmail(ePosta)) {
+    alert('Bu e-posta adresi zaten kullanılmıştır. Lütfen farklı bir e-posta adresi girin.');
+    return; // Uyarıyı gösterip formun gönderilmesini engelleyin
+  }
 
   // Yeni bir tablo satırı oluşturun
   const newRow = document.createElement('tr');
@@ -52,6 +53,17 @@ form.addEventListener('submit', function(e) {
   const adresCell = document.createElement('td');
   adresCell.textContent = adres;
 
+  const deleteButtonCell = document.createElement('td');
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'Sil';
+  deleteButton.addEventListener('click', function() {
+    var result = confirm('Bu satırı silmek istediğinize emin misiniz?');
+    if (result) {
+      deleteRow(newRow);
+    }
+  });
+  deleteButtonCell.appendChild(deleteButton);
+
   // Hücreleri satıra ekleyin
   newRow.appendChild(sirketAdiCell);
   newRow.appendChild(musteriTipiCell);
@@ -60,6 +72,7 @@ form.addEventListener('submit', function(e) {
   newRow.appendChild(ePostaCell);
   newRow.appendChild(telefonCell);
   newRow.appendChild(adresCell);
+  newRow.appendChild(deleteButtonCell);
 
   // Satırı tabloya ekleyin
   table.appendChild(newRow);
@@ -69,4 +82,34 @@ form.addEventListener('submit', function(e) {
 
   // Tablo verilerini localStorage'a kaydedin
   localStorage.setItem('tableData', table.innerHTML);
+
+  // Event listener'ları ekle
+  attachDeleteButtonListeners();
 });
+
+// E-posta adresinin daha önce girilip girilmediğini kontrol edin
+function checkDuplicateEmail(email) {
+  const existingEmails = Array.from(document.querySelectorAll('#myTable td:nth-child(5)')).map(cell => cell.textContent);
+  return existingEmails.includes(email);
+}
+
+// Satırı sil
+function deleteRow(row) {
+  row.parentNode.removeChild(row);
+  // Tablo verilerini localStorage'a kaydedin
+  localStorage.setItem('tableData', table.innerHTML);
+}
+
+// "Delete" butonlarının event listener'larını ekle
+function attachDeleteButtonListeners() {
+  const deleteButtons = document.querySelectorAll('#myTable button');
+  deleteButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      var result = confirm('Bu satırı silmek istediğinize emin misiniz?');
+      if (result) {
+        var row = button.parentNode.parentNode;
+        deleteRow(row);
+      }
+    });
+  });
+}
